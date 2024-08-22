@@ -7,6 +7,8 @@ import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
@@ -16,6 +18,9 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import PersonalVideoOutlinedIcon from '@mui/icons-material/PersonalVideoOutlined';
+import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined';
+import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -134,27 +139,33 @@ const Sidebar = () => {
               Consultas
             </Typography>
             <Item
-              title="Inventario"
-              to="/inventario"
+              title="Lista Camiones"
+              to="/truks"
               icon={<ReceiptOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Cuentas"
+              title="Usuarios"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Invoices Balances"
+              title="Porteria"
               to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
+              icon={<AssuredWorkloadOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-
+            <Item
+                  title="Estados"
+                  to="/faq"
+                  icon={<SecurityOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
             {userLevel !== 2 && (
               <>
                 <Typography
@@ -165,33 +176,27 @@ const Sidebar = () => {
                   Registros
                 </Typography>
                 <Item
-                  title="Registros"
+                  title="Registro Entrada"
                   to="/registration"
-                  icon={<PersonOutlinedIcon />}
+                  icon={<LocalShippingIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
                 <Item
-                  title="Profile Form"
+                  title="Registro Usuario"
                   to="/form"
                   icon={<PersonOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
                 <Item
-                  title="Calendar"
+                  title="Registro Hangar"
                   to="/calendar"
-                  icon={<CalendarTodayOutlinedIcon />}
+                  icon={<WarehouseOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
-                <Item
-                  title="FAQ Page"
-                  to="/faq"
-                  icon={<HelpOutlineOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
+                
               </>
             )}
 
@@ -200,36 +205,36 @@ const Sidebar = () => {
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
             >
-              Charts
+              Pantallas
             </Typography>
             <Item
-              title="Bar Chart"
+              title="Hangar 1"
               to="/bar"
-              icon={<BarChartOutlinedIcon />}
+              icon={<PersonalVideoOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Pie Chart"
+              title="Hangar 2"
               to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
+              icon={<PersonalVideoOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
             <Item
-              title="Line Chart"
+              title="Porteria "
               to="/line"
-              icon={<TimelineOutlinedIcon />}
+              icon={<PersonalVideoOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
+            {/* <Item
               title="Geography Chart"
               to="/geography"
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            />  */}
           </Box>
         </Menu>
       </ProSidebar>

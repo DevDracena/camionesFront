@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { Box, Button, TextField, useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import Header from '../components/Header';
-import axios from 'axios'; // Necesitarás axios o fetch para las solicitudes HTTP
+// import Header from '../components/Header';
+// import axios from 'axios'; // Necesitarás axios o fetch para las solicitudes HTTP
 import { PostLogin } from '../services/login.services';
 import ModalCharge from "../modal/modalCharge";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +20,16 @@ export const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [level, setLevel] = useState(null);
 
-
-
   const navigate = useNavigate();
+
+
+// useEffect(() => {
+//     const token = localStorage.getItem('authToken');
+//     if (token) {
+//         navigate('/'); // Si el token ya existe, redirige
+//     }
+// }, [navigate]);
+
 
     // Función para manejar el cambio en los inputs
     const handleChange = (event) => {
@@ -39,14 +47,14 @@ export const Login = () => {
         const data = { username, password };
     
         try {
-            await new Promise((resolve) => setTimeout(resolve, 3000));
+            await new Promise((resolve) => setTimeout(resolve, 2000));
             const response = await PostLogin(data);
     
             console.log('Login successful:', response);
+            localStorage.setItem('authToken', response.token);
             setLevel(response.level);
             localStorage.setItem('authToken', response.token);
             localStorage.setItem('userLevel', response.level); // Guarda el nivel del usuario
-    
             setIsLoading(false);
             navigate('/'); // Redirige a la página principal después del login
         } catch (error) {

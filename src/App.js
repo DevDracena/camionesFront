@@ -26,6 +26,7 @@ import Inventario from "./queries/inventario/index";
 import useInactivityTimeout from "./customHooks/inactivityHook"; // Asegúrate de tener la ruta correcta
 import ProtectedRoute from "./components/ProtectedRoute"; // Asegúrate de tener la ruta correcta
 import Products from "./registration/Products";
+import Truks from "./queries/list Truk";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -75,6 +76,8 @@ function App() {
               <Route path="/geography" element={<ProtectedRoute><Geography /></ProtectedRoute>} />
               <Route path="/Inventario" element={<ProtectedRoute><Inventario /></ProtectedRoute>} />
               <Route path="/Products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
+              <Route path="/truks" element={<ProtectedRoute><Truks /></ProtectedRoute>} />
+
 
             </Routes>
           </main>
