@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { Box, Button, TextField, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { tokens } from "../theme";
-// import Header from '../components/Header';
-// import axios from 'axios'; // Necesitarás axios o fetch para las solicitudes HTTP
 import { PostLogin } from '../services/login.services';
 import ModalCharge from "../modal/modalCharge";
 import { useNavigate } from "react-router-dom";
-
-
 
 export const Login = () => {
     const theme = useTheme();
@@ -17,19 +12,10 @@ export const Login = () => {
     // Estado para los inputs
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [level, setLevel] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [level, setLevel] = useState(null);
 
-  const navigate = useNavigate();
-
-
-// useEffect(() => {
-//     const token = localStorage.getItem('authToken');
-//     if (token) {
-//         navigate('/'); // Si el token ya existe, redirige
-//     }
-// }, [navigate]);
-
+    const navigate = useNavigate();
 
     // Función para manejar el cambio en los inputs
     const handleChange = (event) => {
@@ -47,14 +33,14 @@ export const Login = () => {
         const data = { username, password };
     
         try {
+            // Simular un retraso para mostrar el modal de carga
             await new Promise((resolve) => setTimeout(resolve, 2000));
             const response = await PostLogin(data);
     
             console.log('Login successful:', response);
             localStorage.setItem('authToken', response.token);
-            setLevel(response.level);
-            localStorage.setItem('authToken', response.token);
             localStorage.setItem('userLevel', response.level); // Guarda el nivel del usuario
+            setLevel(response.level);
             setIsLoading(false);
             navigate('/'); // Redirige a la página principal después del login
         } catch (error) {
@@ -62,10 +48,8 @@ export const Login = () => {
             setIsLoading(false);
         }
     };
-
-//   console.log("level",level);
-
-
+    // const token = localStorage.getItem("authToken");
+    // console.log("este es el token desde el login",token);
     return (
         <Box sx={{
             background:"#1f2a40",
@@ -167,8 +151,7 @@ export const Login = () => {
             </Box>
             <ModalCharge isLoading={isLoading} />
         </Box>
+    );
+};
 
-    )
-}
-
-
+export default Login;

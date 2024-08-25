@@ -27,6 +27,7 @@ import useInactivityTimeout from "./customHooks/inactivityHook"; // Asegúrate d
 import ProtectedRoute from "./components/ProtectedRoute"; // Asegúrate de tener la ruta correcta
 import Products from "./registration/Products";
 import Truks from "./queries/list Truk";
+import Hangar1 from "./queries/Pantallas/hangar1";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -43,6 +44,7 @@ function App() {
   }, []);
 
   const isLoginRoute = location.pathname === "/login";
+  const isHangar1Route = location.pathname === "/hangar1";
 
   useInactivityTimeout(1800000); // 30 minutos
 
@@ -52,9 +54,9 @@ function App() {
         <CssBaseline />
         <div className="app">
           {!isLoginRoute && !isAuthenticated && <Navigate to="/login" replace />}
-          {!isLoginRoute && isAuthenticated && <Sidebar isSidebar={isSidebar} />}
-          <main className="content">
-            {!isLoginRoute && isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
+          {!isLoginRoute && !isHangar1Route && isAuthenticated && <Sidebar isSidebar={isSidebar} />}
+          <main className={isHangar1Route ? "full-screen-content" : "content"}>
+            {!isLoginRoute && !isHangar1Route && isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
@@ -77,8 +79,7 @@ function App() {
               <Route path="/Inventario" element={<ProtectedRoute><Inventario /></ProtectedRoute>} />
               <Route path="/Products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
               <Route path="/truks" element={<ProtectedRoute><Truks /></ProtectedRoute>} />
-
-
+              <Route path="/hangar1" element={<ProtectedRoute><Hangar1 /></ProtectedRoute>} />
             </Routes>
           </main>
         </div>
@@ -87,4 +88,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

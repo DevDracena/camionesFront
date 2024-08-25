@@ -209,7 +209,7 @@ const Sidebar = () => {
             </Typography>
             <Item
               title="Hangar 1"
-              to="/bar"
+              to="/hangar1"
               icon={<PersonalVideoOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
