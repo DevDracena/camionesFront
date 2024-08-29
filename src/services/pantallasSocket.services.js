@@ -30,7 +30,7 @@ const requestListHangar2 = () => {
         reject(new Error('Error al obtener datos del backend: ' + response.error));
       } else {
         resolve(response.data);
-        console.log(response.data)
+        // console.log(response.data)
       }
     });
 
@@ -45,7 +45,7 @@ const requestListHangar2 = () => {
 
 // Emitir un evento para actualizar el estado del camión
 const updateTruckState = (truckId, newState) => {
-  console.log("dsts servicio",newState)
+  // console.log("dsts servicio",newState)
   // console.log("camion",truckId)
 
   return new Promise((resolve, reject) => {
@@ -68,7 +68,7 @@ const updateTruckState = (truckId, newState) => {
 // Escuchar los eventos de actualización del estado de los camiones
 socket.on('truckStateUpdated', (updatedTruck) => {
   // Puedes manejar la actualización de la UI aquí si lo prefieres
-  console.log("Estado del camión actualizado:", updatedTruck);
+  // console.log("Estado del camión actualizado:", updatedTruck);
 });
 
 export { requestListHangar2, updateTruckState};

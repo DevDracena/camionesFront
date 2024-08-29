@@ -5,12 +5,13 @@ import Header from "../../components/Header";
 import {
   requestListTruckView,
   updateTruckState,
+  deleteTruckState
 } from "../../services/trukSocket.services";
 import { getDatos } from "../../services/state.services";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
+// import InputLabel from "@mui/material/InputLabel";
+// import MenuItem from "@mui/material/MenuItem";
+// import FormControl from "@mui/material/FormControl";
+// import Select from "@mui/material/Select";
 import io from "socket.io-client";
 import { getDatosHangar } from "../../services/hangar.services";
 
@@ -23,12 +24,12 @@ const socket = io(SOCKET_URL, {
   },
 });
 
-const Truks = () => {
+const Portero = () => {
   const [data, setData] = useState([]);
-  const [UpdateData, setUpdateData] = useState({
-    id_hangar: undefined,
-    id_state: undefined,
-  });
+  // const [UpdateData, setUpdateData] = useState({
+  //   id_hangar: undefined,
+  //   id_state: undefined,
+  // });
 
   const [userLevel, setUserLevel] = useState(null);
   const [statesList, setStatesList] = useState([]);
@@ -36,6 +37,8 @@ const Truks = () => {
   const [hangarList, setHangarList] = useState([]);
   const [hangarMap, setHangarMap] = useState({});
   const [error, setError] = useState(null); 
+  const [filteredData, setFilteredData] = useState(null);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
 
@@ -44,7 +47,10 @@ const Truks = () => {
       try {
         const datos = await requestListTruckView();
         if (datos) {
-          setData(datos);
+          const filteredData = datos.filter(item => item.id_state === 1 || item.id_state === 6);
+          setData(filteredData);
+          const filtered = filteredData.find((item) => item.id_state === 1 || item.id_state === 6);
+          setFilteredData(filtered ? { ...filtered } : null);
         }
       } catch (error) {
         console.error("Error al obtener datos del backend:", error);
@@ -106,13 +112,42 @@ const Truks = () => {
     };
   }, []);
 
-  const handleChange = async (event, index) => {
-    const newStateId = event.target.value;
-    const truckId = data[index].id;
+  // console.log("xd", data.id)
+  const handleUpdate = () => {
+    if (filteredData && filteredData.id) {
+      const truckId = filteredData.id; // Asegúrate de que `filteredData` esté bien definido y que tenga un `id`
+      const stateId = 5; // Reemplaza con el ID de estado que deseas
+  
+      handleChange(stateId, truckId); // Aquí utilizas las variables correctamente definidas
+    } else {
+      console.error("No se pudo encontrar el camión para actualizar.");
+    }
+  };
+  
+
+  const handleDelete = async () => {
+    // console.log("click");
+    const truckId = filteredData.id; // Asegúrate de que `filteredData` esté bien definido y que tenga un `id`
+     const updatedData = {
+        status_active: 0,
+        // id_state: data[index].id_state, // Mantener el valor actual de id_state
+      };
+  
+      try {
+        await deleteTruckState(truckId, updatedData);
+      } catch (error) {
+        console.error("Error al actualizar el hangar del camión:", error);
+      }
+  };
+
+
+  const handleChange = async (stateId, truckI) => {
+    const newStateId = stateId;
+    const truckId = truckI;
 
     const updatedData = {
       id_state: newStateId,
-      id_hangar: UpdateData.id_hangar, // Mantener el valor actual de id_hangar
+    //   id_hangar: UpdateData.id_hangar, // Mantener el valor actual de id_hangar
     };
 
     try {
@@ -126,32 +161,6 @@ const Truks = () => {
   const handleHangarChange = async (event, index) => {
     const newHangarId = event.target.value;
     const truckId = data[index].id;
-
-    // Verificar si Hangar 2 ya está ocupado
-    const isHangar2Occupied = data.some(
-      (camion, i) => camion.id_hangar === 2 && i !== index
-    );
-
-    if (newHangarId === 2 && isHangar2Occupied) {
-      // Si Hangar 2 está ocupado, mostrar advertencia
-      setError("Hangar 2 ya está ocupado por otro camión.");
-      return;
-    } else {
-      setError(null); // Limpiar cualquier advertencia anterior
-    }
-
-     // Verificar si Hangar 2 ya está ocupado
-     const isHangar1Occupied = data.some(
-      (camion, i) => camion.id_hangar === 1 && i !== index
-    );
-
-    if (newHangarId === 1 && isHangar1Occupied) {
-      // Si Hangar 2 está ocupado, mostrar advertencia
-      setError("Hangar 1 ya está ocupado por otro camión.");
-      return;
-    } else {
-      setError(null); // Limpiar cualquier advertencia anterior
-    }
 
     const updatedData = {
       id_hangar: newHangarId,
@@ -179,8 +188,8 @@ const Truks = () => {
         return "#f96d02";
       case "Liberado Para Salida":
         return "#0fec0f";
-        case "En Espera":
-          return "#f32307";
+      case "En Espera":
+        return "#ddec0f";
       default:
         return "#ffffff";
     }
@@ -189,7 +198,7 @@ const Truks = () => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" p={0}>
-        <Header title="Lista de Camiones" subtitle="Ingreso de Camiones" />
+        <Header title="Porteria" subtitle="Ingreso de Camiones en Porteria" />
       </Box>
 
       <Box
@@ -214,47 +223,6 @@ const Truks = () => {
                 borderRadius="8px"
                 boxShadow="0 0 10px rgba(255, 255, 255, 0.1)"
               >
-                <Box
-                  display={"flex"}
-                  marginTop={"5px"}
-                  alignItems="center"
-                  marginBottom={"15px"}
-                >
-                  <Typography
-                    variant="h3"
-                    fontWeight="bold"
-                    color={colors.primary}
-                    mr={2}
-                  >
-                    Lugar:
-                  </Typography>
-
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id={`hangar-select-label-${index}`}
-                      sx={{ marginLeft: "-3%", color: colors.primary[100] }}
-                    >
-                      Lugar Asignado
-                    </InputLabel>
-                    <Select
-                      labelId={`hangar-select-label-${index}`}
-                      id={`hangar-select-${index}`}
-                      value={camion.id_hangar}
-                      label="Hangar"
-                      onChange={(event) => handleHangarChange(event, index)}
-                      sx={{ marginLeft: "-3%", color: colors.primary[100] }}
-                    >
-                      {hangarList &&
-                        hangarList.length > 0 &&
-                        hangarList.map((hangar) => (
-                          <MenuItem key={hangar.id} value={hangar.id}>
-                            {hangar.descripcion}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-
                 <Typography
                   variant="h3"
                   fontWeight="bold"
@@ -263,40 +231,49 @@ const Truks = () => {
                   Camión: {camion.chapa}
                 </Typography>
 
-                <Box display={"flex"} marginTop={"5px"} alignItems="center">
-                  <Typography
-                    variant="h3"
-                    fontWeight="bold"
-                    color={getEstadoColor(camion.estado)}
-                    mr={2}
-                  >
-                    Estado:
-                  </Typography>
+                <Typography
+                  variant="h3"
+                  fontWeight="bold"
+                  marginBottom={"20px"}
+                  color={getEstadoColor(camion.estado)}
+                >
+                  Estado: {camion.estado}
+                </Typography>
 
-                  <FormControl fullWidth>
-                    <InputLabel
-                      id={`estado-select-label-${index}`}
-                      sx={{ marginLeft: "-3%" }}
+                <Box>
+                  {camion.id_state === 1 && (
+                    <button
+                      className="button-ok"
+                      onClick={handleUpdate}
+                      style={{
+                        textShadow: `1px 1px 1px ${colors.primary[100]}`,
+                        background: "#70d8bd",
+                        width: "130px",
+                        height: "50px",
+                        borderRadius: "10px",
+                        marginRight: "15px",
+                      }}
                     >
-                      Estado
-                    </InputLabel>
-                    <Select
-                      labelId={`estado-select-label-${index}`}
-                      id={`estado-select-${index}`}
-                      value={camion.id_state || ''}
-                      label="Estado"
-                      onChange={(event) => handleChange(event, index)}
-                      sx={{ marginLeft: "-3%" }}
+                      Dar Entrada
+                    </button>
+                  )}
+                  {camion.id_state === 6 && (
+                    <button
+                      className="button-off"
+                      onClick={handleDelete}
+                      style={{
+                        color: colors.primary[100],
+                        textShadow: "1px 1px 1px black",
+                        background: "#cd0f0f",
+                        width: "130px",
+                        height: "50px",
+                        borderRadius: "10px",
+                        marginRight: "15px",
+                      }}
                     >
-                      {statesList &&
-                        statesList.length > 0 &&
-                        statesList.map((stateItem) => (
-                          <MenuItem key={stateItem.id} value={stateItem.id}>
-                            {stateItem.Descripcion}
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
+                      Dar Salida
+                    </button>
+                  )}
                 </Box>
               </Box>
             ))
@@ -309,4 +286,4 @@ const Truks = () => {
   );
 };
 
-export default Truks;
+export default Portero;

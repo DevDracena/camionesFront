@@ -1,6 +1,6 @@
 import io from 'socket.io-client';
 import { getListTruckView } from '../services/truk.services';
-
+import Alert from '@mui/material/Alert';
 const SOCKET_URL = 'http://localhost:4000'; // URL del servidor Socket.IO
 const socket = io(SOCKET_URL, {
   withCredentials: true,
@@ -20,7 +20,6 @@ socket.on('disconnect', () => {
 });
 
 // Emitir un evento al servidor para solicitar datos
-// Emitir un evento al servidor para solicitar datos
 const requestListTruckView = () => {
   return new Promise((resolve, reject) => {
     socket.emit('requestListTruckView');
@@ -30,7 +29,30 @@ const requestListTruckView = () => {
         reject(new Error('Error al obtener datos del backend: ' + response.error));
       } else {
         resolve(response.data);
-        console.log(response.data)
+        // console.log(response.data)
+      }
+    });
+
+    socket.on('connect_error', (error) => {
+      reject(new Error('Error de conexión con el servidor: ' + error.message));
+    });
+  });
+};
+
+// Emitir un evento para actualizar el estado del camión
+const createTruckState = (newData) => {
+  // console.log("dsts servicio",newData)
+  // console.log("camion",truckId)
+
+  return new Promise((resolve, reject) => {
+    socket.emit('createTruckState', { newData });
+
+    socket.once('truckStateCreated', (response) => {
+      if (response.error) {
+        reject(new Error('Error al crear el estado del camión: ' + response.error));
+      } else {
+        resolve(response);
+        // console.log("resolve",resolve)
       }
     });
 
@@ -41,11 +63,9 @@ const requestListTruckView = () => {
 };
 
 
-
-
 // Emitir un evento para actualizar el estado del camión
 const updateTruckState = (truckId, newState) => {
-  console.log("dsts servicio",newState)
+  // console.log("dsts servicio",newState)
   // console.log("camion",truckId)
 
   return new Promise((resolve, reject) => {
@@ -56,6 +76,7 @@ const updateTruckState = (truckId, newState) => {
         reject(new Error('Error al actualizar el estado del camión: ' + response.error));
       } else {
         resolve(response);
+        // console.log("resolve",resolve)
       }
     });
 
@@ -65,10 +86,33 @@ const updateTruckState = (truckId, newState) => {
   });
 };
 
+// Emitir un evento para actualizar el estado del camión
+const deleteTruckState = (truckId, newState) => {
+  // console.log("camion",truckId)
+
+  return new Promise((resolve, reject) => {
+    socket.emit('updateTruckState', { truckId, newState });
+
+    socket.once('deleteTruck', (response) => {
+      if (response.error) {
+        reject(new Error('Error al actualizar el estado del camión: ' + response.error));
+      } else {
+        resolve(response);
+  // console.log("dsts servicio",response)
+
+        
+      }
+    });
+
+    socket.on('connect_error', (error) => {
+      reject(new Error('Error de conexión con el servidor: ' + error.message));
+    });
+  });
+};
 // Escuchar los eventos de actualización del estado de los camiones
-socket.on('truckStateUpdated', (updatedTruck) => {
+  socket.on('truckStateUpdated', (updatedTruck) => {
   // Puedes manejar la actualización de la UI aquí si lo prefieres
-  console.log("Estado del camión actualizado:", updatedTruck);
+  // console.log("Estado del camión actualizado:", updatedTruck);
 });
 
-export { requestListTruckView, updateTruckState};
+export { requestListTruckView, updateTruckState, deleteTruckState, createTruckState};

@@ -27,7 +27,15 @@ import useInactivityTimeout from "./customHooks/inactivityHook"; // Asegúrate d
 import ProtectedRoute from "./components/ProtectedRoute"; // Asegúrate de tener la ruta correcta
 import Products from "./registration/Products";
 import Truks from "./queries/list Truk";
+import Hangar2 from "./queries/Pantallas/hangar2";
 import Hangar1 from "./queries/Pantallas/hangar1";
+import Porteria from "./queries/Pantallas/porteria";
+import Portero from "./queries/porteria view";
+import Camiones from "./registration/camiones";
+import Dracena from "./dracena/dracena";
+
+
+
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -45,6 +53,8 @@ function App() {
 
   const isLoginRoute = location.pathname === "/login";
   const isHangar1Route = location.pathname === "/hangar1";
+  const isHangar2Route = location.pathname === "/hangar2";
+  const isPorteriaRoute = location.pathname === "/porteria";
 
   useInactivityTimeout(1800000); // 30 minutos
 
@@ -54,12 +64,13 @@ function App() {
         <CssBaseline />
         <div className="app">
           {!isLoginRoute && !isAuthenticated && <Navigate to="/login" replace />}
-          {!isLoginRoute && !isHangar1Route && isAuthenticated && <Sidebar isSidebar={isSidebar} />}
+          {!isLoginRoute && !isHangar1Route && !isHangar2Route  && !isPorteriaRoute && isAuthenticated && <Sidebar isSidebar={isSidebar} />}
           <main className={isHangar1Route ? "full-screen-content" : "content"}>
-            {!isLoginRoute && !isHangar1Route && isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
+            {!isLoginRoute && !isHangar1Route && !isPorteriaRoute && !isHangar2Route && isAuthenticated && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/login" element={<Login />} />
-              <Route path="/" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+              <Route path="/" element={<ProtectedRoute><Dracena /></ProtectedRoute>} />
+              <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/work" element={<ProtectedRoute><Work /></ProtectedRoute>} />
               <Route path="/team" element={<ProtectedRoute><Team /></ProtectedRoute>} />
               <Route path="/contacts" element={<ProtectedRoute><Contacts /></ProtectedRoute>} />
@@ -79,7 +90,13 @@ function App() {
               <Route path="/Inventario" element={<ProtectedRoute><Inventario /></ProtectedRoute>} />
               <Route path="/Products" element={<ProtectedRoute><Products /></ProtectedRoute>} />
               <Route path="/truks" element={<ProtectedRoute><Truks /></ProtectedRoute>} />
+              <Route path="/hangar2" element={<ProtectedRoute><Hangar2 /></ProtectedRoute>} />
               <Route path="/hangar1" element={<ProtectedRoute><Hangar1 /></ProtectedRoute>} />
+              <Route path="/porteria" element={<ProtectedRoute><Porteria/></ProtectedRoute>} />
+              <Route path="/portero" element={<ProtectedRoute><Portero/></ProtectedRoute>} />
+              <Route path="/camiones" element={<ProtectedRoute><Camiones/></ProtectedRoute>} />
+              {/* <Route path="/dracena" element={<ProtectedRoute><Dracena/></ProtectedRoute>} /> */}
+
             </Routes>
           </main>
         </div>

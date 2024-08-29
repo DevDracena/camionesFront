@@ -12,7 +12,7 @@ const socket = io(SOCKET_URL, {
   },
 });
 
-const Hangar1 = () => {
+const Hangar2 = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
 
@@ -21,7 +21,7 @@ const Hangar1 = () => {
       const datos = await requestListTruckView();
       if (datos) {
         setData(datos);
-        const filtered = datos.find((item) => item.id_hangar === 1);
+        const filtered = datos.find((item) => item.id_hangar === 2);
         setFilteredData(filtered ? { ...filtered } : null);
       }
     } catch (error) {
@@ -35,7 +35,7 @@ const Hangar1 = () => {
     socket.on("listTruckViewData", (hangarData) => {
       if (hangarData && hangarData.length > 0) {
         setData(hangarData);
-        const filtered = hangarData.find((item) => item.id_hangar === 1);
+        const filtered = hangarData.find((item) => item.id_hangar === 2);
         setFilteredData(filtered ? { ...filtered } : null);
       }
     });
@@ -52,7 +52,7 @@ const Hangar1 = () => {
             truck.id === updatedTruck.id ? updatedTruck : truck
           )
         );
-        if (updatedTruck.id_hangar === 1) {
+        if (updatedTruck.id_hangar === 2) {
           setFilteredData({ ...updatedTruck });
         }
       } else {
@@ -77,7 +77,7 @@ const Hangar1 = () => {
       case "Carga":
         return "#00ff5e";
       case "Descarga":
-        return "#ff0000";
+        return "#ff9100";
       case "Desencarpar":
         return "#f96d02";
       case "Liberado":
@@ -108,10 +108,10 @@ const Hangar1 = () => {
         <h1 style={{
           fontSize: "10vw",
           marginTop: "-2vh",
-          backgroundColor:"#15fc11",
+          backgroundColor:"#fc8611",
           border: "2px solid black",
           textShadow:"2px 2px 2px black"
-        }}>Hangar 1</h1>
+        }}>Hangar 2</h1>
 
         <Box>
           <img className='logo'
@@ -149,4 +149,4 @@ const Hangar1 = () => {
   );
 }
 
-export default Hangar1;
+export default Hangar2;

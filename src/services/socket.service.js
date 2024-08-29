@@ -25,7 +25,7 @@ export const requestListHangar2 = () => {
         reject(new Error('Error al obtener datos del backend: ' + response.error));
       } else {
         resolve(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       }
     });
 
@@ -55,7 +55,7 @@ export const updateTruckState = (truckId, newState) => {
 
 // Escuchar los eventos de actualización del estado de los camiones
 socket.on('truckStateUpdated', (updatedTruck) => {
-  console.log("Estado del camión actualizado:", updatedTruck);
+  // console.log("Estado del camión actualizado:", updatedTruck);
 });
 
 export default socket;

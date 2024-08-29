@@ -12,7 +12,7 @@ const socket = io(SOCKET_URL, {
   },
 });
 
-const Hangar1 = () => {
+const Porteria = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState(null);
 
@@ -21,7 +21,7 @@ const Hangar1 = () => {
       const datos = await requestListTruckView();
       if (datos) {
         setData(datos);
-        const filtered = datos.find((item) => item.id_hangar === 1);
+        const filtered = datos.find((item) => item.id_state === 1);
         setFilteredData(filtered ? { ...filtered } : null);
       }
     } catch (error) {
@@ -35,12 +35,13 @@ const Hangar1 = () => {
     socket.on("listTruckViewData", (hangarData) => {
       if (hangarData && hangarData.length > 0) {
         setData(hangarData);
-        const filtered = hangarData.find((item) => item.id_hangar === 1);
+        const filtered = hangarData.find((item) => item.id_state === 1);
         setFilteredData(filtered ? { ...filtered } : null);
       }
     });
 
     socket.on("truckStateUpdated", (updatedTruck) => {
+      // Verifica que updatedTruck no sea null o indefinido y que id_state y estado existan
       if (
         updatedTruck && 
         updatedTruck.id !== null && 
@@ -52,7 +53,7 @@ const Hangar1 = () => {
             truck.id === updatedTruck.id ? updatedTruck : truck
           )
         );
-        if (updatedTruck.id_hangar === 1) {
+        if (updatedTruck.id_state === 1) {
           setFilteredData({ ...updatedTruck });
         }
       } else {
@@ -77,11 +78,13 @@ const Hangar1 = () => {
       case "Carga":
         return "#00ff5e";
       case "Descarga":
-        return "#ff0000";
+        return "#ff9100";
       case "Desencarpar":
         return "#f96d02";
-      case "Liberado":
+      case "Liberado para Salida":
         return "#0fec0f";
+      case "En Espera":
+        return "#f32307";
       default:
         return "#ffffff";
     }
@@ -108,10 +111,10 @@ const Hangar1 = () => {
         <h1 style={{
           fontSize: "10vw",
           marginTop: "-2vh",
-          backgroundColor:"#15fc11",
+          backgroundColor:"#fc7711",
           border: "2px solid black",
           textShadow:"2px 2px 2px black"
-        }}>Hangar 1</h1>
+        }}>Porteria</h1>
 
         <Box>
           <img className='logo'
@@ -121,8 +124,7 @@ const Hangar1 = () => {
               margin:"0",
               marginTop: "-12vh",
               marginRight: "2vw",
-          border: "2px solid black",
-
+              border: "2px solid black",
             }}
             src="../../assets/dracena.png" alt="logo" />
         </Box>
@@ -142,11 +144,11 @@ const Hangar1 = () => {
         </Box>
       ) : (
         <Typography variant="h1" sx={{ fontSize: "9.5vw", marginTop: "-5vh", fontWeight: "700" , textShadow:"2px 2px 2px black"}}>
-          No hay camiones asignados al Hangar
+          No hay camiones Para Ingreso
         </Typography>
       )}
     </Box>
   );
 }
 
-export default Hangar1;
+export default Porteria;

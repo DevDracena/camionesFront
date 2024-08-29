@@ -5,19 +5,19 @@ import { Link } from "react-router-dom";
 import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
+// import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
-import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
-import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
-import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
+// import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
+// import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
+// import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+// import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+// import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import PersonalVideoOutlinedIcon from '@mui/icons-material/PersonalVideoOutlined';
 import WarehouseOutlinedIcon from '@mui/icons-material/WarehouseOutlined';
 import SecurityOutlinedIcon from '@mui/icons-material/SecurityOutlined';
@@ -56,8 +56,8 @@ const Sidebar = () => {
 
   const logoSrc =
     theme.palette.mode === "dark"
-      ? "../../assets/helios11.png"
-      : "../../assets/helios4.png";
+      ? "../../assets/dracena.png"
+      : "../../assets/dracena.png";
 
   return (
     <Box
@@ -72,7 +72,7 @@ const Sidebar = () => {
           padding: "5px 35px 5px 20px !important",
         },
         "& .pro-inner-item:hover": {
-          color: "#868dfb !important",
+          color: "#eb7004 !important",
         },
         "& .pro-menu-item.active": {
           color: "#4cceac!important",
@@ -122,52 +122,43 @@ const Sidebar = () => {
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            {userLevel !== 2 && (
-              <Item
-                title="Dashboard"
-                to="/"
-                icon={<HomeOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Consultas
-            </Typography>
-            <Item
-              title="Lista Camiones"
-              to="/truks"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Usuarios"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Porteria"
-              to="/invoices"
-              icon={<AssuredWorkloadOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
+            {userLevel === 1 && (
+              <>
+                <Item
+                  title="Dashboard"
+                  to="/dashboard"
+                  icon={<HomeOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Lista Camiones"
+                  to="/truks"
+                  icon={<ReceiptOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                {/* <Item
+                  title="Usuarios"
+                  to="/contacts"
+                  icon={<ContactsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                /> */}
+                <Item
+                  title="Porteria"
+                  to="/portero"
+                  icon={<AssuredWorkloadOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
                   title="Estados"
-                  to="/faq"
+                  // to="/faq"
                   icon={<SecurityOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
-            {userLevel !== 2 && (
-              <>
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
@@ -177,7 +168,7 @@ const Sidebar = () => {
                 </Typography>
                 <Item
                   title="Registro Entrada"
-                  to="/registration"
+                  to="/camiones"
                   icon={<LocalShippingIcon />}
                   selected={selected}
                   setSelected={setSelected}
@@ -191,50 +182,100 @@ const Sidebar = () => {
                 />
                 <Item
                   title="Registro Hangar"
-                  to="/calendar"
+                  // to="/calendar"
                   icon={<WarehouseOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
-                
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Pantallas
+                </Typography>
+                <Item
+                  title="Hangar 1"
+                  to="/hangar1"
+                  icon={<PersonalVideoOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Hangar 2"
+                  to="/hangar2"
+                  icon={<PersonalVideoOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Porteria "
+                  to="/porteria"
+                  icon={<PersonalVideoOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
               </>
             )}
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pantallas
-            </Typography>
-            <Item
-              title="Hangar 1"
-              to="/hangar1"
-              icon={<PersonalVideoOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Hangar 2"
-              to="/pie"
-              icon={<PersonalVideoOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Porteria "
-              to="/line"
-              icon={<PersonalVideoOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            {/* <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />  */}
+            {userLevel === 2 && (
+              <>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Consultas
+                </Typography>
+                <Item
+                  title="Lista Camiones"
+                  to="/truks"
+                  icon={<ReceiptOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Registros
+                </Typography>
+                <Item
+                  title="Registro Entrada"
+                  to="/camiones"
+                  icon={<LocalShippingIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
+
+            {userLevel === 3 && (
+              <>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Pantallas
+                </Typography>
+                <Item
+                  title="Pantalla Porteria "
+                  to="/porteria"
+                  icon={<PersonalVideoOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Porteria "
+                  to="/portero"
+                  icon={<AssuredWorkloadOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
           </Box>
         </Menu>
       </ProSidebar>

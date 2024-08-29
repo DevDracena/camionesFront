@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4000/';
+const API_URL = 'http://localhost:3000/';
 
 
 // Crear una instancia de Axios
@@ -25,10 +25,10 @@ api.interceptors.request.use(
 );
 
 
-const getDatos = async () => {
+const getDatosCamion = async () => {
   try {
-    const response = await api.get(`${API_URL}truck`);
-    // console.log("este es el verdadero", response.data)
+    const response = await api.get(`${API_URL}camion`);
+    //  console.log("este es el verdadero", response.data)
     return response.data;
   } catch (error) {
     throw new Error('Error al obtener datos del backend:', error);
@@ -69,4 +69,4 @@ const PostDatos = async (datos) => {
   }
 };
 
-export { getDatos, PostDatos, getOneDatos, getListTruckView };
+export { getDatosCamion, PostDatos, getOneDatos, getListTruckView };

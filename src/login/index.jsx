@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Box, Button, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+// import { tokens } from "../theme";
 import { PostLogin } from '../services/login.services';
 import ModalCharge from "../modal/modalCharge";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
     const theme = useTheme();
-    const colors = tokens(theme.palette.mode);
+    // const colors = tokens(theme.palette.mode);
 
     // Estado para los inputs
     const [username, setUsername] = useState('');
@@ -37,12 +37,18 @@ export const Login = () => {
             await new Promise((resolve) => setTimeout(resolve, 2000));
             const response = await PostLogin(data);
     
-            console.log('Login successful:', response);
+            // console.log('Login successful:', response);
             localStorage.setItem('authToken', response.token);
-            localStorage.setItem('userLevel', response.level); // Guarda el nivel del usuario
-            setLevel(response.level);
+            localStorage.setItem('userLevel', response.id_level); // Guarda el nivel del usuario
+             // Redirigir al login si el id_level es 0, null, o undefined
+        if (response.id_level === 0 || response.id_level === null || response.id_level === undefined) {
+            navigate('/login');
             setIsLoading(false);
+        } else {
+            setLevel(response.id_level);
             navigate('/'); // Redirige a la página principal después del login
+            
+        }
         } catch (error) {
             console.error('Error logging in:', error);
             setIsLoading(false);
