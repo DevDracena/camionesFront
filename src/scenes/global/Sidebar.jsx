@@ -49,6 +49,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     const level = localStorage.getItem('userLevel');
+    // console.log("user level desde sidebar", userLevel)
     if (level) {
       setUserLevel(parseInt(level));
     }

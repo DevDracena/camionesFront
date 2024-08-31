@@ -41,14 +41,10 @@ export const Login = () => {
             localStorage.setItem('authToken', response.token);
             localStorage.setItem('userLevel', response.id_level); // Guarda el nivel del usuario
              // Redirigir al login si el id_level es 0, null, o undefined
-        if (response.id_level === 0 || response.id_level === null || response.id_level === undefined) {
-            navigate('/login');
-            setIsLoading(false);
-        } else {
+             setIsLoading(false);
             setLevel(response.id_level);
             navigate('/'); // Redirige a la página principal después del login
-            
-        }
+        
         } catch (error) {
             console.error('Error logging in:', error);
             setIsLoading(false);

@@ -2,7 +2,6 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3000/';
 
-
 // Crear una instancia de Axios
 const api = axios.create({
   baseURL: API_URL,
@@ -11,27 +10,22 @@ const api = axios.create({
 // Configurar un interceptor para agregar el token a cada solicitud
 api.interceptors.request.use(
   (config) => {
-    // Obtener el token del localStorage
     const token = localStorage.getItem('authToken');
-    
     if (token) {
-      // Agregar el token al encabezado de autorización
       config.headers['Authorization'] = `Bearer ${token}`;
     }
-
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-
+// Usar la instancia `api` con el token incluido en las solicitudes
 const getDatos = async () => {
   try {
-    const response = await axios.get(`${API_URL}state`);
-    // console.log("este es el verdadero", response.data)
+    const response = await api.get(`${API_URL}state`);
     return response.data;
   } catch (error) {
-    throw new Error('Error al obtener datos del backend:', error);
+    throw new Error('Error al obtener datos del backend: ' + error.message);
   }
 };
 

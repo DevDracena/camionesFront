@@ -239,8 +239,8 @@ const Truks = () => {
                     <Select
                       labelId={`hangar-select-label-${index}`}
                       id={`hangar-select-${index}`}
-                      value={camion.id_hangar}
-                      label="Hangar"
+                      value={camion.id_hangar || ''}
+                      label="Hangar" 
                       onChange={(event) => handleHangarChange(event, index)}
                       sx={{ marginLeft: "-3%", color: colors.primary[100] }}
                     >

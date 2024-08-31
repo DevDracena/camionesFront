@@ -47,9 +47,12 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem("authToken");
     if (token) {
-      setIsAuthenticated(true);
+        setIsAuthenticated(true);
+    } else {
+        setIsAuthenticated(false);
     }
-  }, []);
+}, []);
+
 
   const isLoginRoute = location.pathname === "/login";
   const isHangar1Route = location.pathname === "/hangar1";
