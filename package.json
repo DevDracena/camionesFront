@@ -2,6 +2,7 @@
   "name": "react-admin",
   "version": "0.1.0",
   "private": true,
+
   "dependencies": {
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
@@ -27,6 +28,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "chart.js": "^3.9.1",
+    "cross-env": "^7.0.3",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "formik": "^2.2.9",
@@ -42,8 +44,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
-    "start": "PORT=5001 react-scripts start",
-    "dev": "PORT=5001 react-scripts start",
+    "start": "cross-env PORT=5001 react-scripts start",
+    "dev": "cross-env PORT=5001 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

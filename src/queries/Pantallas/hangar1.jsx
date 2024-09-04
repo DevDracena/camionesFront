@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { requestListTruckView } from '../../services/trukSocket.services';
 import { Box, Typography } from "@mui/material";
 
-const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = 'http://192.168.88.69:4000';
 const socket = io(SOCKET_URL, {
   withCredentials: true,
   transports: ["websocket", "polling"],

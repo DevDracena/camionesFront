@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 export const createSocket = () => {
   const token = localStorage.getItem('authToken'); // Obtén el token del localStorage
 
-  return io('http://localhost:4000', {
+  return io('http://192.168.88.69:4000', {
     withCredentials: true,
     transports: ['websocket', 'polling'],
     query: {

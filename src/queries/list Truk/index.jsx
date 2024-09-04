@@ -14,7 +14,7 @@ import Select from "@mui/material/Select";
 import io from "socket.io-client";
 import { getDatosHangar } from "../../services/hangar.services";
 
-const SOCKET_URL = "http://localhost:4000"; // URL del servidor Socket.IO
+const SOCKET_URL = 'http://192.168.88.69:4000'; // URL del servidor Socket.IO
 const socket = io(SOCKET_URL, {
   withCredentials: true,
   transports: ["websocket", "polling"],

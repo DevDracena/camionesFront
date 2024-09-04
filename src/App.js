@@ -51,7 +51,8 @@ function App() {
     } else {
         setIsAuthenticated(false);
     }
-}, []);
+}, [location]); // Depende de la ubicación, se verifica cada vez que la ruta cambia.
+
 
 
   const isLoginRoute = location.pathname === "/login";

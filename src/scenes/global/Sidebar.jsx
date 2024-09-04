@@ -6,7 +6,7 @@ import "react-pro-sidebar/dist/css/styles.css";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 // import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
+// import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import AssuredWorkloadOutlinedIcon from '@mui/icons-material/AssuredWorkloadOutlined';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
